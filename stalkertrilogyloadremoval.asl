@@ -3,22 +3,22 @@ state("XR_3DA")
 	bool Loading: 0x10BB58;
 }
 
-state("xrEngine", "Clear Sky")
+state("xrEngine", "CS")
 {
 	bool Loading: "xrGame.dll", 0x4DAC10, 0x688;
 }
 
-state("xrEngine", "Call of Pripyat")
+state("xrEngine", "CoP")
 {
 	bool Loading: "xrGame.dll", 0x512CC4, 0x14;
 }
 
 init
 {
-	if (modules.First().ModuleMemorySize == 1961984)
-		version = "Call of Pripyat";
-	else if (modules.First().ModuleMemorySize == 1720320)
-		version = "Clear Sky";
+	if (modules.First().FileVersionInfo.FileDescription == "X-Ray 1.6 Engine")
+		version = "CoP";
+	else if (game.ProcessName != "XR_3DA")
+		version = "CS";
 }
 
 isLoading
@@ -27,6 +27,6 @@ isLoading
 }
 
 exit
-{	
+{
 	timer.IsGameTimePaused = true;
 }
