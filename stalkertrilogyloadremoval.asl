@@ -19,8 +19,6 @@ init
 		version = "Call of Pripyat";
 	else if (modules.First().ModuleMemorySize == 1720320)
 		version = "Clear Sky";
-	else if (game.ProcessName != "XR_3DA")
-		current.Loading = false;
 }
 
 isLoading
@@ -29,6 +27,6 @@ isLoading
 }
 
 exit
-{
-	current.Loading = false;
+{	
+	timer.IsGameTimePaused = true;
 }
