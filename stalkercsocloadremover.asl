@@ -1,19 +1,18 @@
-state("XR_3DA", "1.0006")
+state("XR_3DA")
 {
-	bool Loading: 0x10BB58;
+	int Loading: 0x10BB58;
+	int Sync:	0x10BB8C;
 }
-
-state("XR_3DA", "1.0000")
+update
 {
-	bool Loading: "xrGame.dll", 0x3EBC58, 0xC;
-}
-
-init
-{
-	version = modules.Where(x => x.ModuleName == "xrGame.dll").First().ModuleMemorySize == 6344704 ? "1.0006" : "1.0000";
+	vars.Loading = false;
+	if (current.Loading == 0 || current.Sync == 1)
+	{
+		vars.Loading = true;
+	}
 }
 
 isLoading
 {
-	return version == "1.0006" ? !current.Loading : current.Loading;
+	return vars.Loading;
 }
