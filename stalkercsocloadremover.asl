@@ -70,11 +70,6 @@ start
 	return vars.doStart;
 }
 
-reset
-{
-	return vars.doReset;
-}
-
 isLoading
 {
 	return vars.Loading;
