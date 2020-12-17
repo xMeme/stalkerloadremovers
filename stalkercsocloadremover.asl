@@ -1,8 +1,14 @@
 state("XR_3DA")
 {
-	int Loading: 	0x10BB58;
-	int Sync:		0x10BB8C;
-	int NoControl:	0x10BD18;
+	bool Loading: 	"xrNetServer.dll", 0x13E84;
+	byte Sync:		0x10BB8C;
+	byte QLoad:		0xFA40, 0x3C;
+	byte Quit:		"ODE.dll", 0x2EA30;
+	bool NoControl:	0x10BD18;
+	float xpos: 	0x10BE94;
+	float ypos: 	0x10BE98;
+	float zpos: 	0x10BE9C;
+	float sync:		0x10BE80;
 }
 
 update
@@ -12,73 +18,49 @@ update
 	vars.doSplit = false;
 	vars.doReset = false;
 	
-	vars.Quit.Update(game);
-	vars.Load2.Update(game);
-
-	if(!vars.Started && !vars.doStart && vars.Quit.Current == 1 && vars.Quit.Old == 0){
+	// условие старта таймера
+	
+	if(!vars.Started && !vars.doStart && current.Quit == 1 && old.Quit == 0){
 		vars.doStart = true;
 		vars.Started = true;
 	}
-	if (current.Loading == 0 || current.Sync == 1 || vars.Escape.Current == 1 || vars.IsLag)
+	
+	if ( vars.plashka || !current.Loading || current.Sync == 1 || vars.Escape.Current == 1 || (current.xpos==0.00 && current.ypos==0.00 && current.zpos==0.00 ) || (current.sync > 0.09 && current.sync < 0.11))
 	{
 		vars.Loading = true; 
-		if(vars.Escape.Current == 1 && !vars.IsLag){
-			if(settings["fix"]){
-				vars.Escape.UpdateInterval = TimeSpan.FromMilliseconds(320);
-			}else{
-				vars.Escape.UpdateInterval = TimeSpan.FromMilliseconds(250);
-			}
-			vars.IsLag = true;
-		}
-		else{
-			if(current.Loading == 0 || (vars.Escape.Current == 0 && vars.Load2.Current == 1 && vars.Escape.Changed)){
-				vars.IsLag = false;
-				vars.Escape.UpdateInterval = TimeSpan.Zero;
-			}
-		}
-
-		
+		//условие сплита
 		if(current.Sync == 1 && old.Sync == 0){
 			vars.doSplit = true;
+			vars.Escape.UpdateInterval = TimeSpan.Zero;
 		}
 	} 
 	else
 	{
 		vars.Loading = false;
 	}
-	
-	if(!settings["fix"]){
-		if(vars.Quit.Current == 0 && vars.Quit.Old == 1 && !vars.Loading && current.NoControl == 1){
-			vars.doStart = false;
-			vars.doReset = true;
-			vars.Started = false;		
-		}
-	}
 	vars.Escape.Update(game);
-	
 }
 
 startup
 {
-	refreshRate = 48;
 	settings.Add("fix", false, "Low PC Fix (false splitting, etc)");
+	refreshRate = 60;
 }
 
 init
 {
-	vars.Started = false;
-	vars.IsLag = false;
-	vars.Quit = new MemoryWatcher<byte>(new DeepPointer("ODE.dll", 0x2EA30));
-	vars.Escape = new MemoryWatcher<byte>(new DeepPointer("xrGame.dll", 0x560668));
-	vars.Load2 = new MemoryWatcher<byte>(new DeepPointer("xrNetServer.dll", 0x13E84));
 	if(settings["fix"]){
 		refreshRate = 40;
 	}
-	vars.doReset = false;
+	vars.Escape = new MemoryWatcher<byte>(new DeepPointer("xrGame.dll", 0x560668));
+	vars.Started = false;
 	vars.doStart = false;
 	vars.doSplit = false;
+	vars.doReset = false;
 	vars.Loading = true;
-	
+	vars.plashka = false;
+	vars.xplashka = 0.00;
+	vars.yplashka = 0.00;
 }
 
 split
