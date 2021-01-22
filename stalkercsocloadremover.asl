@@ -1,44 +1,39 @@
-state("XR_3DA")
+state("XR_3DA","1.0006")
 {
 	bool Loading: 	"xrNetServer.dll", 0x13E84;
-	byte Sync:		0x10BB8C;
-	byte QLoad:		0xFA40, 0x3C;
-	byte Quit:		"ODE.dll", 0x2EA30;
 	bool NoControl:	0x10BD18;
 	float xpos: 	0x10BE94;
 	float ypos: 	0x10BE98;
 	float zpos: 	0x10BE9C;
 	float sync:		0x10BE80;
 }
-
+state("XR_3DA","1.0000")
+{
+	bool Loading: 	"xrNetServer.dll",0xFAC4;
+	bool NoControl:	"xrGame.dll",0x54C2F9;
+	float xpos: 	0x10493C;
+	float ypos: 	0x104940;
+	float zpos: 	0x104944;
+	float sync:		0x104928;
+}
 update
 {
-
-	vars.doStart = false;
 	vars.doSplit = false;
-	vars.doReset = false;
-	
-	// условие старта таймера
-	
-	if(!vars.Started && !vars.doStart && current.Quit == 1 && old.Quit == 0){
-		vars.doStart = true;
-		vars.Started = true;
-	}
-	
-	if ( vars.plashka || !current.Loading || current.Sync == 1 || vars.Escape.Current == 1 || (current.xpos==0.00 && current.ypos==0.00 && current.zpos==0.00 ) || (current.sync > 0.09 && current.sync < 0.11))
+	vars.Loading = false;
+	if (!current.Loading || (current.sync > 0.09 && current.sync < 0.11)|| current.NoControl)
 	{
 		vars.Loading = true; 
 		//условие сплита
-		if(current.Sync == 1 && old.Sync == 0){
+		if(current.NoControl && !vars.SplitDone) {
 			vars.doSplit = true;
-			vars.Escape.UpdateInterval = TimeSpan.Zero;
+			vars.SplitDone = true;
 		}
 	} 
 	else
 	{
 		vars.Loading = false;
+		vars.SplitDone = false;
 	}
-	vars.Escape.Update(game);
 }
 
 startup
@@ -49,35 +44,23 @@ startup
 
 init
 {
-	if(settings["fix"]){
+	if(modules.First().ModuleMemorySize == 1662976)	{
+		version = "1.0000";
+	}
+	else {
+		version = "1.0006";
+	}
+	if(settings["fix"]) {
 		refreshRate = 40;
 	}
-	vars.Escape = new MemoryWatcher<byte>(new DeepPointer("xrGame.dll", 0x560668));
-	vars.Started = false;
-	vars.doStart = false;
 	vars.doSplit = false;
-	vars.doReset = false;
-	vars.Loading = true;
-	vars.plashka = false;
-	vars.xplashka = 0.00;
-	vars.yplashka = 0.00;
+	vars.Loading = false;
+	vars.SplitDone = false;
 }
-
 split
 {
 	return vars.doSplit;
 }
-
-reset
-{
-	return vars.doReset;
-}
-
-start
-{
-	return vars.doStart;
-}
-
 isLoading
 {
 	return vars.Loading;
