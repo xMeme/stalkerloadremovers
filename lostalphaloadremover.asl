@@ -16,7 +16,22 @@ isLoading
 {
 	return !current.Loading || current.presskey || current.plashka;
 }
-
+split
+{
+	if(current.plashka)
+	{
+		if(!vars.splitDone)
+		{
+			vars.splitDone = true;
+			return true;
+		}
+	}
+	else
+	{
+		vars.splitDone = false;
+	}
+	
+}
 startup
 {
 	settings.Add("fix", false, "Low PC Fix (false splitting, etc)");
@@ -37,4 +52,5 @@ init
 	{
 		refreshRate = 40;
 	}
+	vars.splitDone = false;
 }
