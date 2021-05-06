@@ -39,7 +39,7 @@ startup
 
 init
 {
-	if(modules.First().ModuleMemorySize == 1662976)
+	if(modules.First().ModuleMemorySize == 1662976 || modules.First().ModuleMemorySize == 1556288)
 	{
 		version = "1.0000";
 	}
