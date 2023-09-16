@@ -12,7 +12,6 @@ state("XR_3DA","1.0000")
 }
 update
 {
-
 	vars.doSplit = false;
 	vars.Loading = false;
 	if (!current.Loading || (current.sync > 0.09 && current.sync < 0.11)|| current.NoControl)
@@ -44,7 +43,7 @@ init
 		version = "1.0000";
 	}
 	else{
-		version = "1.0006";
+		version = "1.0006"; 
 	}
 	if(settings["fix"]){
 		refreshRate = 40;
@@ -60,4 +59,8 @@ split
 isLoading
 {
 	return vars.Loading;
+}
+exit
+{
+    timer.IsGameTimePaused = true;
 }
