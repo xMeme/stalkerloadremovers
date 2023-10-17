@@ -23,4 +23,7 @@ isLoading
 	}
 	return current.OnLoad != vars.x || !current.OldLoad || !current.Loading || current.Sync == 1 || old.Sync == 1 || current.Escape || (current.onSync>0.09 && current.onSync<0.11);
 }
-
+exit
+{
+    timer.IsGameTimePaused = true;
+}
