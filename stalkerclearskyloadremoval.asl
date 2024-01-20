@@ -11,6 +11,8 @@ state("xrEngine")
 init {
 	refreshRate = 60;
 	vars.x = 0;
+	settings.Add("warps", false, "For SaveWarps");
+	vars.running = 0;
 }
 
 isLoading
@@ -21,7 +23,12 @@ isLoading
 	if(current.Sync == 1){
 		vars.x = 0;
 	}
-	return current.OnLoad != vars.x || !current.OldLoad || !current.Loading || current.Sync == 1 || old.Sync == 1 || current.Escape || (current.onSync>0.09 && current.onSync<0.11);
+	if(settings["warps"){
+		vars.running =  current.OnLoad != vars.x || !current.OldLoad || !current.Loading || current.Sync == 1 || old.Sync == 1 || (current.onSync>0.09 && current.onSync<0.11);
+	}else{
+		vars.running =  current.OnLoad != vars.x || !current.OldLoad || !current.Loading || current.Sync == 1 || old.Sync == 1 || current.Escape || (current.onSync>0.09 && current.onSync<0.11);
+	}
+	return vars.running;
 }
 exit
 {
