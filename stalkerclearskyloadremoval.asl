@@ -39,7 +39,3 @@ isLoading
     }
     return vars.running;
 }
-exit
-{
-    timer.IsGameTimePaused = true;
-}
