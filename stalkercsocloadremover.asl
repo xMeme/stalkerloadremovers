@@ -5,7 +5,7 @@ state("XR_3DA","1.0006 EU/NA Crack")
 	float sync:	0x10BE80;
     byte Start: "ODE.dll", 0x2EA30;
 	string20 CurMap: "xrCore.dll", 0xBF368, 0x4, 0x0, 0x40, 0x8, 0x20, 0x54;
-	string18 End: "xrCore.dll", 0x2120E, -3588;
+	string21 End: "xrCore.dll", 0x2120E, -3588;
 	string15 TrueEnd: "XR_3DA.exe", 0x10BB70, 0x1C, 0x0, 0x28, 0x8, 0xDB5;
 }
 state("XR_3DA","1.0000 EU/NA")
@@ -15,7 +15,7 @@ state("XR_3DA","1.0000 EU/NA")
 	float sync: 0x104928;
 	byte Start: "ODE.dll", 0x32798;
 	string20 CurMap: "xrCore.dll", 0xBA040, 0x4, 0x0, 0x40, 0x8, 0x28, 0x4;
-	string18 End: "XR_3DA.exe", 0x90A4, 0x5F8;
+	string21 End: "XR_3DA.exe", 0x90A4, 0x5F8;
 	string15 TrueEnd: "XR_3DA.exe", 0x4163C, 0xD58;
 }
 state("XR_3DA","1.0000 RU Crack")
@@ -25,7 +25,7 @@ state("XR_3DA","1.0000 RU Crack")
 	float sync: 0x104928;
 	byte Start: "ODE.dll", 0x32798;
 	string20 CurMap: "xrCore.dll", 0xBA040, 0x4, 0x0, 0x20, 0x40, 0x8, 0x28, 0x4;
-	string18 End: "XR_3DA.exe", 0x90A4, 0x5E4;
+	string21 End: "XR_3DA.exe", 0x90A4, 0x5E4;
 	string15 TrueEnd: "XR_3DA.exe", 0x4163C, 0xD44;
 }
 update
