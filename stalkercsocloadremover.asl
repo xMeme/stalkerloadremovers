@@ -89,7 +89,7 @@ start
 }
 split
 {
-    if (current.CurMap != old.CurMap && vars.Loading == true || current.End == "final_immortal.ogm" || current.TrueEnd == "final_peace.ogm")
+    if (current.CurMap != old.CurMap && vars.Loading == true || current.End == "final_immortal.ogm" || current.End == "final_gold.ogm" || current.End == "final_apocal.ogm" || current.End == "final_blind.ogm" || current.End == "final_to_monolith.ogm" || current.TrueEnd == "final_peace.ogm")
 	{
 		vars.doneMaps.Add(current.CurMap);
 		return true;
