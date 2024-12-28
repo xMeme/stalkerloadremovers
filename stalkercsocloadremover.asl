@@ -89,7 +89,7 @@ start
 }
 split
 {
-    if (current.CurMap != old.CurMap || current.End == "final_immortal.ogm" || current.TrueEnd == "final_peace.ogm")
+    if (current.CurMap != old.CurMap && vars.Loading == true || current.End == "final_immortal.ogm" || current.TrueEnd == "final_peace.ogm")
 	{
 		vars.doneMaps.Add(current.CurMap);
 		return true;
