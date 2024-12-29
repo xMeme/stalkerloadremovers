@@ -3,7 +3,7 @@ state("XR_3DA","1.0006 EU/NA Crack")
 	bool Loading: "xrNetServer.dll", 0x13E84;
 	bool NoControl:	"xrGame.dll",0x560668;
 	float sync:	0x10BE80;
-    byte Start: "ODE.dll", 0x2EA30;
+	byte Start: "ODE.dll", 0x2EA30;
 	string20 CurMap: "xrCore.dll", 0xBF368, 0x4, 0x0, 0x40, 0x8, 0x20, 0x54;
 	string21 End: "xrCore.dll", 0x2120E, -3588;
 	string15 TrueEnd: "XR_3DA.exe", 0x10BB70, 0x1C, 0x0, 0x28, 0x8, 0xDB5;
@@ -40,12 +40,11 @@ update
 		vars.Loading = false;
 	}
 }
-
 startup
 {
 	settings.Add("fix", false, "Low PC Fix (incase of inaccurate LRT)");
-    if (timer.CurrentTimingMethod == TimingMethod.RealTime)
-    {
+	if (timer.CurrentTimingMethod == TimingMethod.RealTime)
+	{
     	var timingMessage = MessageBox.Show
 		(
         	"This game uses Load Removed Time (Game Time) as default timing method \n"+
@@ -53,8 +52,7 @@ startup
         	"Would you like to set the timing method to Game Time? This will make verification easier",
         	"LiveSplit | S.T.A.L.K.E.R.: Shadow of Chernobyl",
         	MessageBoxButtons.YesNo,MessageBoxIcon.Question
-        );
-
+		);
         if (timingMessage == DialogResult.Yes)
         {
             timer.CurrentTimingMethod = TimingMethod.GameTime;
@@ -65,20 +63,20 @@ startup
 
 init
 {
-    print(modules.First().ModuleMemorySize.ToString());
+	//print(modules.First().ModuleMemorySize.ToString());
 	switch(modules.First().ModuleMemorySize)
 	{
-	    case 1662976:
+		case 1662976:
 		    version = "1.0000 RU Crack";
 			break;
 		case 1613824:
 		    version = "1.0000 EU/NA";
 			break;
-    }
+	}
 	if(settings["fix"]){
 		refreshRate = 40;
 	}
-    vars.doneMaps = new List<string>();
+	vars.doneMaps = new List<string>();
 	vars.Loading = false;
 	timer.IsGameTimePaused = false;
 }
@@ -97,7 +95,7 @@ split
 }
 onReset
 {
-    vars.doneMaps.Clear();
+	vars.doneMaps.Clear();
 }
 isLoading
 {
@@ -105,5 +103,5 @@ isLoading
 }
 exit
 {
-    timer.IsGameTimePaused = true;
+	timer.IsGameTimePaused = true;
 }
