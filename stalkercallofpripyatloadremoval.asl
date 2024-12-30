@@ -11,6 +11,8 @@ state("xrEngine", "1.6.02")
 
 startup
 {
+	settings.Add("autosplitter", false, "Autosplit per level");
+	settings.SetToolTip("autosplitter", "Enable autosplitter on every level transition \n");
 	if (timer.CurrentTimingMethod == TimingMethod.RealTime)
 	{        
 		var timingMessage = MessageBox.Show
@@ -53,7 +55,7 @@ start
 
 split
 {
-    if (current.CurMap != old.CurMap && !current.Loading || current.End == "outro" || current.End2 == "outro")
+    if (current.CurMap != old.CurMap && !current.Loading && settings["autosplitter"] || current.End == "outro" || current.End2 == "outro")
 	{
 		vars.doneMaps.Add(current.CurMap);
 		return true;
