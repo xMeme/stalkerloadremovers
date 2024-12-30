@@ -1,8 +1,6 @@
 state("xrEngine")
 {
-	bool Loading: 0x969D8;
 	int Sync: "xrGame.dll", 0x606621;
-	bool OldLoad: "xrGame.dll", 0x4DAC10, 0x688;
 	byte OnLoad: "xrEngine.exe", 0x8DDC, 0x10;
 	float onSync: "xrEngine.exe", 0x96D50;
 	byte NoControl: "xrGame.dll", 0x606320;
@@ -33,9 +31,7 @@ startup
 
 init 
 {
-    vars.doneMaps = new List<string>();
-	vars.x = 0;
-	vars.running = 0;
+	vars.doneMaps = new List<string>();
 	timer.IsGameTimePaused = false;
 }
 
@@ -46,7 +42,7 @@ start
 
 split
 {
-    if (current.CurMap != old.CurMap && vars.running == true || current.End == "outro_half")
+    if (current.CurMap != old.CurMap && current.Sync == 1 || current.End == "outro_half")
 	{
 		vars.doneMaps.Add(current.CurMap);
 		return true;
@@ -60,16 +56,7 @@ onReset
 
 isLoading
 {
-	if (vars.x == 0)
-	{
-		vars.x = current.OnLoad;
-	}
-	if (current.Sync == 1)
-	{
-		vars.x = 0;
-	}
-	vars.running =  current.OnLoad != vars.x || !current.OldLoad || !current.Loading || current.Sync == 1 || old.Sync == 1 || (current.onSync>0.09 && current.onSync<0.11);
-	return vars.running;
+	return current.Sync == 1 || (current.onSync>0.09 && current.onSync<0.11) || current.OnLoad == 160;
 }
 
 exit
