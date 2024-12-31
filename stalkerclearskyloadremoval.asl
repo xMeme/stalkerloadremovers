@@ -2,7 +2,7 @@ state("xrEngine", "1.5.10")
 {
 	bool Loading: "xrNetServer.dll", 0x13E04;
 	float onSync: "xrEngine.exe", 0x96D50;
-	byte NoControl: "xrGame.dll", 0x606320;
+	bool NoControl: "xrGame.dll", 0x606320;
 	string5 Start: "xrGame.dll", 0x2A6B19, 0xE1;
 	string21 CurMap: "xrCore.dll", 0xBE718, 0x18, 0x28, 0x0;
 	string10 End: "xrEngine.exe", 0x96CC0, 0x30, 0x10, 0x4, 0x34, 0x4, 0xC, 0x16;
@@ -36,7 +36,7 @@ init
 
 start
 {
-	return current.NoControl == 1 && current.Start == "intro";
+	return current.NoControl && !old.NoControl && current.Start == "intro";
 }
 
 split
