@@ -1,7 +1,7 @@
 state("xrEngine", "1.5.10")
 {
 	byte Loading: "xrGame.dll", 0x6072F4, 0x8, 0x94, 0xFC, 0xD4, 0x48, 0x3CC;
-	byte OnLoad: "xrGame.dll", 0x39517D, 0x23;
+	byte OnLoad: "xrEngine.exe", 0x8DDC, 0x10;
 	float onSync: "xrEngine.exe", 0x96D50;
 	byte NoControl: "xrGame.dll", 0x606320;
 	string5 Start: "xrGame.dll", 0x2A6B19, 0xE1;
@@ -32,6 +32,7 @@ startup
 init 
 {
 	vars.doneMaps = new List<string>();
+	vars.preload = 0;
 	timer.IsGameTimePaused = false;
 }
 
@@ -56,7 +57,15 @@ onReset
 
 isLoading
 {
-	return current.Loading == 1 || (current.onSync>0.09 && current.onSync<0.11) || current.OnLoad == 1;
+	if (vars.preload == 0)
+	{
+		vars.preload = current.OnLoad;
+	}
+    if (current.Loading && !old.Loading)
+	{
+		vars.preload = 0;
+	}
+	return current.Loading == 1 || (current.onSync>0.09 && current.onSync<0.11) || current.OnLoad != vars.preload;
 }
 
 exit
