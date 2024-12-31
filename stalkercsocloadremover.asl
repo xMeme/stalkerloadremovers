@@ -38,36 +38,24 @@ state("XR_3DA","1.0000 RU Crack")
 	string21 End: "XR_3DA.exe", 0x90A4, 0x5E4;
 	string15 TrueEnd: "XR_3DA.exe", 0x4163C, 0xD44;
 }
-update
-{
-	vars.Loading = false;
-	if (!current.Loading || (current.sync > 0.09 && current.sync < 0.11) || current.NoControl)
-	{
-		vars.Loading = true;
-	} 
-	else
-	{
-		vars.Loading = false;
-	}
-}
 startup
 {
 	settings.Add("fix", false, "Low PC Fix (incase of inaccurate LRT)");
 	if (timer.CurrentTimingMethod == TimingMethod.RealTime)
 	{
-		var timingMessage = MessageBox.Show
-			(
-        		"This game uses Load Removed Time (Game Time) as default timing method \n"+
-        		"LiveSplit is currently set to show Real Time (RTA).\n"+
-        		"Would you like to set the timing method to Game Time? This will make verification easier",
-        		"LiveSplit | S.T.A.L.K.E.R.: Shadow of Chernobyl",
-        		MessageBoxButtons.YesNo,MessageBoxIcon.Question
-			);
-        	if (timingMessage == DialogResult.Yes)
-        	{
-			timer.CurrentTimingMethod = TimingMethod.GameTime;
-        	}
-	}
+    	var timingMessage = MessageBox.Show
+		(
+        	"This game uses Load Removed Time (Game Time) as default timing method \n"+
+        	"LiveSplit is currently set to show Real Time (RTA).\n"+
+        	"Would you like to set the timing method to Game Time? This will make verification easier",
+        	"LiveSplit | S.T.A.L.K.E.R.: Shadow of Chernobyl",
+        	MessageBoxButtons.YesNo,MessageBoxIcon.Question
+		);
+        if (timingMessage == DialogResult.Yes)
+        {
+            timer.CurrentTimingMethod = TimingMethod.GameTime;
+        }
+    }
 	refreshRate = 60;
 }
 
@@ -76,6 +64,9 @@ init
 	//print(modules.First().ModuleMemorySize.ToString());
 	switch(modules.First().ModuleMemorySize)
 	{
+		case 1646592:
+		    version = "1.0006 GOG";
+			break;
 		case 1662976:
 		    version = "1.0000 RU Crack";
 			break;
@@ -87,17 +78,16 @@ init
 		refreshRate = 40;
 	}
 	vars.doneMaps = new List<string>();
-	vars.Loading = false;
 	timer.IsGameTimePaused = false;
 }
 
 start
 {
-    return current.Start == 1 && old.Start !=1 && vars.Loading == true;
+    return current.Start == 1 && old.Start !=1 && !current.Loading;
 }
 split
 {
-    if (current.CurMap != old.CurMap && vars.Loading == true || current.End == "final_immortal.ogm" || current.End == "final_gold.ogm" || current.End == "final_apocal.ogm" || current.End == "final_blind.ogm" || current.End == "final_to_monolith.ogm" || current.TrueEnd == "final_peace.ogm")
+    if (current.CurMap != old.CurMap && !current.Loading || current.End == "final_immortal.ogm" || current.End == "final_gold.ogm" || current.End == "final_apocal.ogm" || current.End == "final_blind.ogm" || current.End == "final_to_monolith.ogm" || current.TrueEnd == "final_peace.ogm")
 	{
 		vars.doneMaps.Add(current.CurMap);
 		return true;
@@ -109,7 +99,7 @@ onReset
 }
 isLoading
 {
-	return vars.Loading;
+	return !current.Loading || (current.sync > 0.09 && current.sync < 0.11) || current.NoControl;
 }
 exit
 {
