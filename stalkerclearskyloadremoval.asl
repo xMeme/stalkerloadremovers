@@ -45,7 +45,7 @@ init
 	switch(modules.First().ModuleMemorySize)
 	{
 		case 1130496:
-			version = "1.5.10 GOG";
+			version = "1.5.10";
 			break;
 	}
 	vars.doneMaps = new List<string>();
