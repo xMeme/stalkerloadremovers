@@ -1,6 +1,6 @@
 state("xrEngine", "1.5.10")
 {
-	byte Loading: "xrGame.dll", 0x6072F4, 0x8, 0x94, 0xFC, 0xD4, 0x48, 0x3CC;
+	bool Loading: "xrGame.dll", 0x6072F4, 0x8, 0x94, 0xFC, 0xD4, 0x48, 0x3CC;
 	byte OnLoad: "xrEngine.exe", 0x8DDC, 0x10;
 	float onSync: "xrEngine.exe", 0x96D50;
 	byte NoControl: "xrGame.dll", 0x606320;
@@ -65,7 +65,7 @@ isLoading
 	{
 		vars.preload = 0;
 	}
-	return current.Loading == 1 || (current.onSync>0.09 && current.onSync<0.11) || current.OnLoad != vars.preload;
+	return current.Loading || (current.onSync>0.09 && current.onSync<0.11) || current.OnLoad != vars.preload;
 }
 
 exit
