@@ -2,7 +2,7 @@ state("XR_3DA","1.0006 EU/NA Crack")
 {
 	bool Loading: "xrNetServer.dll", 0x13E84;
 	bool NoControl:	"xrGame.dll",0x560668;
-	float sync: 0x10BE80;
+	float sync: "XR_3DA.exe", 0x10BE80;
 	string20 CurMap: "xrCore.dll", 0xBF368, 0x4, 0x0, 0x40, 0x8, 0x20, 0x54;
 	string21 End: "xrCore.dll", 0x2120E, -3588;
 	string15 TrueEnd: "XR_3DA.exe", 0x10BB70, 0x1C, 0x0, 0x28, 0x8, 0xDB5;
@@ -11,7 +11,7 @@ state("XR_3DA","1.0006 GOG")
 {
 	bool Loading: "xrNetServer.dll", 0x13E84;
 	bool NoControl:	"xrGame.dll",0x560668;
-	float sync: 0x10BE80;
+	float sync: "XR_3DA.exe", 0x10BE80;
 	string20 CurMap: "xrCore.dll", 0xBF368, 0x30, 0x60, 0xD64;
 	string21 End: "xrGame.dll", 0x306420, 0xE;
 	string15 TrueEnd: "XR_3DA.exe", 0x10BB70, 0x1C, 0x0, 0x28, 0x8, 0xDB5;
@@ -20,7 +20,7 @@ state("XR_3DA","1.0000 EU/NA")
 {
 	bool Loading: "xrNetServer.dll",0xFAC4;
 	bool NoControl:	"xrGame.dll",0x54C2F9;
-	float sync: 0x104928;
+	float sync: "XR_3DA.exe", 0x104928;
 	string20 CurMap: "xrCore.dll", 0xBA040, 0x4, 0x0, 0x40, 0x8, 0x28, 0x4;
 	string21 End: "XR_3DA.exe", 0x90A4, 0x5F8;
 	string15 TrueEnd: "XR_3DA.exe", 0x4163C, 0xD58;
@@ -29,7 +29,7 @@ state("XR_3DA","1.0000 RU Crack")
 {
 	bool Loading: "xrNetServer.dll",0xFAC4;
 	bool NoControl:	"xrGame.dll",0x54C2F9;
-	float sync: 0x104928;
+	float sync: "XR_3DA.exe", 0x104928;
 	string20 CurMap: "xrCore.dll", 0xBA040, 0x4, 0x0, 0x20, 0x40, 0x8, 0x28, 0x4;
 	string21 End: "XR_3DA.exe", 0x90A4, 0x5E4;
 	string15 TrueEnd: "XR_3DA.exe", 0x4163C, 0xD44;
@@ -83,7 +83,7 @@ start
 }
 split
 {
-    if (current.CurMap != old.CurMap && !current.Loading || current.End == "final_immortal.ogm" || current.End == "final_gold.ogm" || current.End == "final_apocal.ogm" || current.End == "final_blind.ogm" || current.End == "final_to_monolith.ogm" || current.TrueEnd == "final_peace.ogm")
+    if (current.CurMap != old.CurMap && !current.Loading || current.End == "final_immortal.ogm" && current.sync == 0 || current.End == "final_gold.ogm" && current.sync == 0 || current.End == "final_apocal.ogm" && current.sync == 0 || current.End == "final_blind.ogm" && current.sync == 0 || current.End == "final_to_monolith.ogm" && current.sync == 0 || current.TrueEnd == "final_peace.ogm" && current.sync == 0)
 	{
 		vars.doneMaps.Add(current.CurMap);
 		return true;
