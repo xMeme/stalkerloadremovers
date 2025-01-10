@@ -42,26 +42,26 @@ startup
 {
 	refreshRate = 60;
 	
-	settings.Add("shocautosplitter", true, "[SHoC] Autosplit per level - Автоматическое переключение при переходе на локацию");
+	settings.Add("shocautosplitter", true, "[SHoC] Autosplit per level - Автосплит для каждого уровня");
 	settings.SetToolTip
 	(
 	"shocautosplitter",
 	"Enable autosplitter on every level transition \n"+
-	"Позволяет автоматически разделять каждый уровень"
+	"Автоматическое переключение при переходе на локацию"
 	);
-	settings.Add("csautosplitter", true, "[CS] Autosplit per level - Автоматическое переключение при переходе на локацию");
+	settings.Add("csautosplitter", true, "[CS] Autosplit per level - Автосплит для каждого уровня");
 	settings.SetToolTip
 	(
 	"csautosplitter",
 	"Enable autosplitter on every level transition \n"+
-	"Позволяет автоматически разделять каждый уровень"
+	"Автоматическое переключение при переходе на локацию"
 	);
-	settings.Add("copautosplitter", false, "[COP] Autosplit per level - Автоматическое переключение при переходе на локацию");
+	settings.Add("copautosplitter", false, "[COP] Autosplit per level - Автосплит для каждого уровня");
 	settings.SetToolTip
 	(
 	"copautosplitter",
 	"Enable autosplitter on every level transition \n"+
-	"Позволяет автоматически разделять каждый уровень"
+	"Автоматическое переключение при переходе на локацию"
 	);
 
 	if (timer.CurrentTimingMethod == TimingMethod.RealTime)
