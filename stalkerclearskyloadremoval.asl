@@ -10,12 +10,12 @@ state("xrEngine", "1.5.10")
 
 startup
 {
-	settings.Add("autosplitter", true, "Autosplit per level - Автоматическое переключение при переходе на локацию");
+	settings.Add("autosplitter", true, "Autosplit per level - Автосплит для каждого уровня");
 	settings.SetToolTip
 	(
 	"autosplitter",
 	"Enable autosplitter on every level transition \n"+
-	"Позволяет автоматически разделять каждый уровень"
+	"Автоматическое переключение при переходе на локацию"
 	);
 	if (timer.CurrentTimingMethod == TimingMethod.RealTime)
 	{
