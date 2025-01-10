@@ -11,7 +11,7 @@ state("xrEngine", "1.6.02")
 
 startup
 {
-	settings.Add("autosplitter", true, "Autosplit per level - Автоматическое переключение при переходе на локацию");
+	settings.Add("autosplitter", false, "Autosplit per level - Автоматическое переключение при переходе на локацию");
 	settings.SetToolTip
 	(
 	"autosplitter",
