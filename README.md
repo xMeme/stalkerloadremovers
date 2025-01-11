@@ -12,7 +12,7 @@
 |  string   | End              | Displays name of video file of any Wishgranter endings                                                                    |
 |  string   | TrueEnd          | Same purpose as End pointer, but for a name of video file of True Ending, when Strelok destroys C-Consciousness           |
 
-### Clear Sky 1.5.10
+### Clear Sky v1.5.10
 |  Type     | Name             | Description                                                                                                               |
 |  ------   | ---------------  | ----------------------------------------------------------------------------------------------------------------          |
 |  string   | Start            | Displays name of video file of Intro cutscene                                                                             |
@@ -22,6 +22,17 @@
 |  float    | Sync             | Tickrate of the game                                                                                                      |
 |  string   | End              | Displays name of video file of Ending cutscene                                                                            |
 
+
+
+## Shadow of Chernobyl Wishgranter endings
+
+| Ending                          | Internal name               |
+| ------------------------------- | -------------------------   |
+| I want immortality              | final_immortal.ogm          |
+| I want to rule the world        | final_to_monolith.ogm       |
+| I want to be rich               | final_gold.ogm              |
+| I want the zone to disappear    | final_blind.ogm             |
+| Mankind must be controlled      | final_apocal.ogm            |
 
 ## Level names
 
