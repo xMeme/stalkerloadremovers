@@ -20,7 +20,7 @@ state("XR_3DA","1.0000")
 state("xrEngine", "1.5.10")
 {
 	bool Loading: "xrNetServer.dll", 0x13E04;
-	float onSync: "xrEngine.exe", 0x96D50;
+	float sync: "xrEngine.exe", 0x96D50;
 	bool NoControl: "xrGame.dll", 0x606320;
 	string5 Start: "xrGame.dll", 0x2A6B19, 0xE1;
 	string21 CurMap: "xrCore.dll", 0xBE718, 0x18, 0x28, 0x0;
@@ -33,7 +33,7 @@ state("xrEngine", "1.6.02")
 	bool Load2:   0x913F5;
 	byte OnLoad:  0x92E84;
 	string20 CurMap: "xrCore.dll", 0xBE910, 0x18, 0x28, 0x0;
-	float onSync: "xrEngine.exe", 0x92EF4;
+	float sync: "xrEngine.exe", 0x92EF4;
 	string5 End: "xrGame.dll", 0x36C75D, 0xB0;
 	string5 End2: "xrSound.dll", 0x27692, 0xACA;
 }
@@ -153,7 +153,7 @@ isLoading
 	}
 	else if(version == "1.5.10")
 	{
-		return !current.Loading || (current.onSync>0.09 && current.onSync<0.11);
+		return !current.Loading || (current.sync>0.09 && current.sync<0.11);
 	}
 	else if(version == "1.6.02")
 	{
