@@ -1,7 +1,7 @@
 state("xrEngine", "1.5.10")
 {
 	bool Loading: "xrNetServer.dll", 0x13E04;
-	float onSync: "xrEngine.exe", 0x96D50;
+	float Sync: "xrEngine.exe", 0x96D50;
 	bool NoControl: "xrGame.dll", 0x606320;
 	string5 Start: "xrGame.dll", 0x2A6B19, 0xE1;
 	string21 CurMap: "xrCore.dll", 0xBE718, 0x18, 0x28, 0x0;
@@ -49,7 +49,7 @@ start
 
 split
 {
-    if (current.CurMap != old.CurMap && !current.Loading && current.sync != 0 && settings["autosplitter"] || current.End == "outro_half")
+    if (current.CurMap != old.CurMap && !current.Loading && current.Sync != 0 && settings["autosplitter"] || current.End == "outro_half")
 	{
 		vars.doneMaps.Add(current.CurMap);
 		return true;
@@ -63,7 +63,7 @@ onReset
 
 isLoading
 {
-	return !current.Loading || (current.onSync>0.09 && current.onSync<0.11);
+	return !current.Loading || (current.Sync>0.09 && current.Sync<0.11);
 }
 
 exit
