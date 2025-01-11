@@ -26,6 +26,8 @@
 
 ## Shadow of Chernobyl Wishgranter endings
 
+These are the internal Wish Granter ending names that you get when you read the memory address mentioned above.
+
 | Ending                          | Internal name               |
 | ------------------------------- | -------------------------   |
 | I want immortality              | final_immortal.ogm          |
