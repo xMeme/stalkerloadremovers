@@ -3,34 +3,34 @@
 ## Memory addresses
 ### Shadow of Chernobyl v1.0000
 
-| Binary            | Offset1    | Offset2 | Offset3 | Offset4 | Offset5 | Offset6 |  Offset7  |  Offset8  |  Type     | Name             | Description                                                                                                               |
-| ----------------- | ---------- |  -----  |  ----   |  ----   |  ----   |  ----   |   ----    |   ----    |  ------   | ---------------  | ----------------------------------------------------------------------------------------------------------------          |
-| xrNetServer.dll   | 0xFAC4     |         |         |         |         |         |           |           |  bool     | Loading          | `true` while loading a level or save                                                                                      |
-| xrCore.dll        | 0xBA040    |  0x4    |  0x0    |  0x40   |  0x8    |  0x20   |   0x14    |           |  string   | CurMap           | Displays currently loaded level name                                                                                      |
-| xrGame.dll        | 0x54C2F9   |         |         |         |         |         |           |           |  bool     | NoControl        | `true` while in-game cinematic cutscene is playing. Or when player is being at level transition prompt                    |
-| XR_3DA.exe        | 0x104928   |         |         |         |         |         |           |           |  float    | sync             | Tickrate of the game                                                                                                      |
-| XR_3DA.exe        | 0x10A878   |  0xBC   |         |         |         |         |           |           |  string   | End              | Displays name of video file of any Wishgranter endings                                                                    |
-| XR_3DA.exe        | 0x4163C    |  0xD30  |         |         |         |         |           |           |  string   | TrueEnd          | Same purpose as End pointer, but for a name of video file of True Ending, when Strelok destroys C-Consciousness           |
+|  Type     | Name             | Description                                                                                                               |
+|  ------   | ---------------  | ----------------------------------------------------------------------------------------------------------------          |
+|  bool     | Loading          | `true` while loading a level or save                                                                                      |
+|  string   | CurMap           | Displays currently loaded level name                                                                                      |
+|  bool     | NoControl        | `true` while in-game cinematic cutscene is playing. Or when player is being at level transition prompt                    |
+|  float    | sync             | Tickrate of the game                                                                                                      |
+|  string   | End              | Displays name of video file of any Wishgranter endings                                                                    |
+|  string   | TrueEnd          | Same purpose as End pointer, but for a name of video file of True Ending, when Strelok destroys C-Consciousness           |
 
 ### Shadow of Chernobyl v1.0006
-| Binary            | Offset1    | Offset2 | Offset3 | Offset4 | Offset5 | Offset6 |  Offset7  |  Offset8  |  Type     | Name             | Description                                                                                                               |
-| ----------------- | ---------- |  -----  |  ----   |  ----   |  ----   |  ----   |   ----    |   ----    |  ------   | ---------------  | ----------------------------------------------------------------------------------------------------------------          |
-| xrNetServer.dll   | 0x13E84    |         |         |         |         |         |           |           |  bool     | Loading          | `true` while loading a level or save                                                                                      |
-| xrCore.dll        | 0xBF368    |  0x4    |  0x0    |  0x40   |  0x8    |  0x28   |   0x4     |           |  string   | CurMap           | Displays currently loaded level name                                                                                      |
-| xrGame.dll        | 0x560668   |         |         |         |         |         |           |           |  bool     | NoControl        | `true` while in-game cinematic cutscene is playing. Or when player is being at level transition prompt                    |
-| XR_3DA.exe        | 0x10BE80   |         |         |         |         |         |           |           |  float    | sync             | Tickrate of the game                                                                                                      |
-| XR_3DA.exe        | 0x171DD4   |  0x180  |         |         |         |         |           |           |  string   | End              | Displays name of video file of any Wishgranter endings                                                                    |
-| XR_3DA.exe        | 0x7D0F8    |  0x1CE  |         |         |         |         |           |           |  string   | TrueEnd          | Same purpose as End pointer, but for a name of video file of True Ending, when Strelok destroys C-Consciousness           |
+|  Type     | Name             | Description                                                                                                               |
+|  ------   | ---------------  | ----------------------------------------------------------------------------------------------------------------          |
+|  bool     | Loading          | `true` while loading a level or save                                                                                      |
+|  string   | CurMap           | Displays currently loaded level name                                                                                      |
+|  bool     | NoControl        | `true` while in-game cinematic cutscene is playing. Or when player is being at level transition prompt                    |
+|  float    | sync             | Tickrate of the game                                                                                                      |
+|  string   | End              | Displays name of video file of any Wishgranter endings                                                                    |
+|  string   | TrueEnd          | Same purpose as End pointer, but for a name of video file of True Ending, when Strelok destroys C-Consciousness           |
 
 ### Clear Sky 1.5.10
-| Binary            | Offset1    | Offset2 | Offset3 | Offset4 | Offset5 | Offset6 |  Offset7  |  Offset8  |  Type     | Name             | Description                                                                                                               |
-| ----------------- | ---------- |  -----  |  ----   |  ----   |  ----   |  ----   |   ----    |   ----    |  ------   | ---------------  | ----------------------------------------------------------------------------------------------------------------          |
-| xrGame.dll        | 0x2A6B19   |  0xE1   |         |         |         |         |           |           |  string   | Start            | Displays name of video file of Intro cutscene                                                                             |
-| xrNetServer.dll   | 0x13E04    |         |         |         |         |         |           |           |  bool     | Loading          | `true` while loading a level or save                                                                                      |
-| xrCore.dll        | 0xBE718    |  0x18   |  0x28   |  0x0    |         |         |           |           |  string   | CurMap           | Displays currently loaded level name                                                                                      |
-| xrGame.dll        | 0x606320   |         |         |         |         |         |           |           |  bool     | NoControl        | `true` while in-game cinematic cutscene is playing. Or when player is being at level transition prompt                    |
-| xrEngine.exe      | 0x96D50    |         |         |         |         |         |           |           |  float    | Sync             | Tickrate of the game                                                                                                      |
-| xrEngine.exe      | 0x96CC0    |  0x30   |  0x10   |  0x4    |  0x34   |  0x4    |   0xC     |   0x16    |  string   | End              | Displays name of video file of Ending cutscene                                                                            |
+|  Type     | Name             | Description                                                                                                               |
+|  ------   | ---------------  | ----------------------------------------------------------------------------------------------------------------          |
+|  string   | Start            | Displays name of video file of Intro cutscene                                                                             |
+|  bool     | Loading          | `true` while loading a level or save                                                                                      |
+|  string   | CurMap           | Displays currently loaded level name                                                                                      |
+|  bool     | NoControl        | `true` while in-game cinematic cutscene is playing. Or when player is being at level transition prompt                    |
+|  float    | Sync             | Tickrate of the game                                                                                                      |
+|  string   | End              | Displays name of video file of Ending cutscene                                                                            |
 
 
 ## Level names
