@@ -4,7 +4,7 @@ state("xrEngine", "1.6.02")
 	bool Load2:   0x913F5;
 	byte OnLoad:  0x92E84;
 	string20 CurMap: "xrCore.dll", 0xBE910, 0x18, 0x28, 0x0;
-	float onSync: "xrEngine.exe", 0x92EF4;
+	float sync: "xrEngine.exe", 0x92EF4;
 	string5 End: "xrGame.dll", 0x36C75D, 0xB0;
 	string5 End2: "xrSound.dll", 0x27692, 0xACA;
 }
@@ -56,7 +56,7 @@ isLoading
 
 start
 {
-    return current.onSync > 0.001 && current.onSync < 0.11 && (old.onSync == 0 && current.onSync != old.onSync) && current.Loading;
+    return current.sync > 0.001 && current.sync < 0.11 && (old.sync == 0 && current.sync != old.sync) && current.Loading;
 }
 
 split
