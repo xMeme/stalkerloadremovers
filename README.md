@@ -1,18 +1,8 @@
 # S.T.A.L.K.E.R. Trilogy Autoplitter
 
 ## Memory addresses
-### Shadow of Chernobyl v1.0000
+### Shadow of Chernobyl v1.0000-v1.0006
 
-|  Type     | Name             | Description                                                                                                               |
-|  ------   | ---------------  | ----------------------------------------------------------------------------------------------------------------          |
-|  bool     | Loading          | `true` while loading a level or save                                                                                      |
-|  string   | CurMap           | Displays currently loaded level name                                                                                      |
-|  bool     | NoControl        | `true` while in-game cinematic cutscene is playing. Or when player is being at level transition prompt                    |
-|  float    | sync             | Tickrate of the game                                                                                                      |
-|  string   | End              | Displays name of video file of any Wishgranter endings                                                                    |
-|  string   | TrueEnd          | Same purpose as End pointer, but for a name of video file of True Ending, when Strelok destroys C-Consciousness           |
-
-### Shadow of Chernobyl v1.0006
 |  Type     | Name             | Description                                                                                                               |
 |  ------   | ---------------  | ----------------------------------------------------------------------------------------------------------------          |
 |  bool     | Loading          | `true` while loading a level or save                                                                                      |
