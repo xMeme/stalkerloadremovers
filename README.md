@@ -1,4 +1,4 @@
-# S.T.A.L.K.E.R. Trilogy Autoplitter
+# S.T.A.L.K.E.R. Trilogy Autosplitter
 
 ## Memory addresses
 ### Shadow of Chernobyl v1.0000-v1.0006
