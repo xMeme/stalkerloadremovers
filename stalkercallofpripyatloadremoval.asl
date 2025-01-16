@@ -2,7 +2,6 @@ state("xrEngine", "1.6.02")
 {
 	bool Loading: "xrNetServer.dll", 0x12E04;
 	bool Load2: "xrEngine.exe", 0x913F5;
-	bool isPaused: "xrEngine.exe", 0x930F0;
 	string20 CurMap: "xrCore.dll", 0xBE910, 0x18, 0x28, 0x0;
 	float sync: "xrEngine.exe", 0x92EF4;
 	string5 End: "xrGame.dll", 0x36C75D, 0xB0;
@@ -44,7 +43,7 @@ init {
 
 isLoading
 {
-	return !current.Loading || current.Load2 || !current.isPaused && (current.sync > 0 && current.sync < 0.000002);
+	return !current.Loading || current.Load2 || (current.sync > 0.00000019 && current.sync < 0.00000021);
 }
 
 start
