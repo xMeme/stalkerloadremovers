@@ -2,6 +2,7 @@ state("XR_3DA","1.0006")
 {
 	bool Loading: "xrNetServer.dll", 0x13E84;
 	bool NoControl:	"xrGame.dll", 0x560668;
+	bool isPaused: "XR_3DA.exe", 0x10BCD0;
 	float sync: "XR_3DA.exe", 0x10BE80;
 	string20 CurMap: "xrCore.dll", 0xBF368, 0x4, 0x0, 0x40, 0x8, 0x28, 0x4;
 	string21 End: "XR_3DA.exe", 0x171DD4, 0x180;
@@ -11,6 +12,7 @@ state("XR_3DA","1.0000")
 {
 	bool Loading: "xrNetServer.dll", 0xFAC4;
 	bool NoControl:	"xrGame.dll", 0x54C2F9;
+	bool isPaused: "XR_3DA.exe", 0x1047C0;
 	float sync: "XR_3DA.exe", 0x104928;
 	string20 CurMap: "xrCore.dll", 0xBA040, 0x4, 0x0, 0x40, 0x8, 0x20, 0x14;
 	string21 End: "XR_3DA.exe", 0x10A878, 0xBC;
@@ -22,6 +24,7 @@ state("xrEngine", "1.5.10")
 	bool Loading: "xrNetServer.dll", 0x13E04;
 	float sync: "xrEngine.exe", 0x96D50;
 	bool NoControl: "xrGame.dll", 0x606320;
+	bool isPaused: "xrEngine.exe", 0x96BE8;
 	string5 Start: "xrGame.dll", 0x2A6B19, 0xE1;
 	string21 CurMap: "xrCore.dll", 0xBE718, 0x18, 0x28, 0x0;
 	string10 End: "xrEngine.exe", 0x96CC0, 0x30, 0x10, 0x4, 0x34, 0x4, 0xC, 0x16;
@@ -29,9 +32,9 @@ state("xrEngine", "1.5.10")
 
 state("xrEngine", "1.6.02")
 {
-	bool Loading: "xrGame.dll", 0x512CC4, 0x14;
-	bool Load2:   0x913F5;
-	byte OnLoad:  0x92E84;
+	bool Loading: "xrNetServer.dll", 0x12E04;
+	bool Load2: "xrEngine.exe", 0x913F5;
+	bool isPaused: "xrEngine.exe", 0x930F0;
 	string20 CurMap: "xrCore.dll", 0xBE910, 0x18, 0x28, 0x0;
 	float sync: "xrEngine.exe", 0x92EF4;
 	string5 End: "xrGame.dll", 0x36C75D, 0xB0;
@@ -83,7 +86,6 @@ startup
 
 init
 {
-	vars.x = 0;
 	vars.doneMaps = new List<string>();
 	timer.IsGameTimePaused = false;
 
@@ -149,23 +151,15 @@ isLoading
 {
 	if(version == "1.0006" || version == "1.0000")
 	{
-		return !current.Loading || (current.sync > 0.09 && current.sync < 0.11) || current.NoControl;
+		return !current.Loading || (current.sync > 0.09 && current.sync < 0.11) || current.NoControl || !current.isPaused && current.sync == 0;
 	}
 	else if(version == "1.5.10")
 	{
-		return !current.Loading || (current.sync>0.09 && current.sync<0.11);
+		return !current.Loading || (current.sync > 0.09 && current.sync < 0.11) || !current.isPaused && (current.sync > 0 && current.sync < 0.000002);
 	}
 	else if(version == "1.6.02")
 	{
-		if(vars.x == 0)
-		{
-			vars.x = current.OnLoad;
-		}
-		if(old.Load2 && !current.Load2)
-		{
-			vars.x = 0;
-		}
-		return current.OnLoad != vars.x || !current.Loading || current.Load2;
+		return !current.Loading || current.Load2 || !current.isPaused && (current.sync > 0 && current.sync < 0.000002);
 	}
 }
 
