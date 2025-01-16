@@ -19,7 +19,6 @@
 |  string   | Start            | Displays name of video file of Intro cutscene                                                                             |
 |  bool     | Loading          | `true` while loading a level or save                                                                                      |
 |  string   | CurMap           | Displays currently loaded level name                                                                                      |
-|  bool     | isPaused         | `true` while game is paused                                                                                               |
 |  bool     | NoControl        | `true` while in-game cinematic cutscene is playing.                                                                       |
 |  float    | Sync             | Tickrate of the game                                                                                                      |
 |  string   | End              | Displays name of video file of Ending cutscene                                                                            |
@@ -29,7 +28,6 @@
 |  ------   | ---------------  | ----------------------------------------------------------------------------------------------------------------          |
 |  bool     | Loading          | `true` while loading a level or save                                                                                      |
 |  bool     | Load2            | `true` while level is loaded & player didn't press'd any key yet                                                          |
-|  bool     | isPaused         | `true` while game is paused                                                                                               |
 |  string   | CurMap           | Displays currently loaded level name                                                                                      |
 |  float    | Sync             | Tickrate of the game                                                                                                      |
 |  string   | End              | Displays shortened name of audio file of Ending cutscene                                                                  |
