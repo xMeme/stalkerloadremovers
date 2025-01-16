@@ -18,7 +18,7 @@
 |  string   | Start            | Displays name of video file of Intro cutscene                                                                             |
 |  bool     | Loading          | `true` while loading a level or save                                                                                      |
 |  string   | CurMap           | Displays currently loaded level name                                                                                      |
-|  bool     | NoControl        | `true` while in-game cinematic cutscene is playing. Or when player is being at level transition prompt                    |
+|  bool     | NoControl        | `true` while in-game cinematic cutscene is playing.                    |
 |  float    | Sync             | Tickrate of the game                                                                                                      |
 |  string   | End              | Displays name of video file of Ending cutscene                                                                            |
 
