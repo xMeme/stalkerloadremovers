@@ -24,7 +24,7 @@
 |  float    | Sync             | Tickrate of the game                                                                                                      |
 |  string   | End              | Displays name of video file of Ending cutscene                                                                            |
 
-### Call of Pripyat
+### Call of Pripyat v1.6.02
 |  Type     | Name             | Description                                                                                                               |
 |  ------   | ---------------  | ----------------------------------------------------------------------------------------------------------------          |
 |  bool     | Loading          | `true` while loading a level or save                                                                                      |
