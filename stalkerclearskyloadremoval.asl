@@ -3,7 +3,6 @@ state("xrEngine", "1.5.10")
 	bool Loading: "xrNetServer.dll", 0x13E04;
 	float sync: "xrEngine.exe", 0x96D50;
 	bool NoControl: "xrGame.dll", 0x606320;
-	bool isPaused: "xrEngine.exe", 0x96BE8;
 	string5 Start: "xrGame.dll", 0x2A6B19, 0xE1;
 	string21 CurMap: "xrCore.dll", 0xBE718, 0x18, 0x28, 0x0;
 	string10 End: "xrEngine.exe", 0x96CC0, 0x30, 0x10, 0x4, 0x34, 0x4, 0xC, 0x16;
@@ -64,7 +63,7 @@ onReset
 
 isLoading
 {
-	return !current.Loading || (current.sync > 0.09 && current.sync < 0.11) || !current.isPaused && (current.sync > 0 && current.sync < 0.000002);
+	return !current.Loading || (current.sync > 0.08 && current.sync < 0.11) || (current.sync > 0.00000019 && current.sync < 0.00000021);
 }
 
 exit
