@@ -1,8 +1,7 @@
 state("xrEngine", "1.6.02")
 {
-	bool Loading: "xrGame.dll", 0x512CC4, 0x14;
-	bool Load2:   0x913F5;
-	byte OnLoad:  0x92E84;
+	bool Loading: "xrNetServer.dll", 0x12E04;
+	bool Load2: "xrEngine.exe", 0x913F5;
 	string20 CurMap: "xrCore.dll", 0xBE910, 0x18, 0x28, 0x0;
 	float sync: "xrEngine.exe", 0x92EF4;
 	string5 End: "xrGame.dll", 0x36C75D, 0xB0;
@@ -38,20 +37,13 @@ startup
 init {
 	//print(modules.First().ModuleMemorySize.ToString());
 	refreshRate = 60;
-	vars.x = 0;
 	vars.doneMaps = new List<string>();
 	timer.IsGameTimePaused = false;
 }
 
 isLoading
 {
-	if(vars.x == 0){
-		vars.x = current.OnLoad;
-	}
-	if(old.Load2 && !current.Load2){
-		vars.x = 0;
-	}
-	return current.OnLoad != vars.x || !current.Loading || current.Load2;
+	return !current.Loading || current.Load2 || (current.sync > 0.00000019 && current.sync < 0.00000021);
 }
 
 start

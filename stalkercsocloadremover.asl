@@ -2,6 +2,7 @@ state("XR_3DA","1.0006")
 {
 	bool Loading: "xrNetServer.dll", 0x13E84;
 	bool NoControl:	"xrGame.dll", 0x560668;
+	bool isPaused: "XR_3DA.exe", 0x10BCD0;
 	float sync: "XR_3DA.exe", 0x10BE80;
 	string20 CurMap: "xrCore.dll", 0xBF368, 0x4, 0x0, 0x40, 0x8, 0x28, 0x4;
 	string21 End: "XR_3DA.exe", 0x171DD4, 0x180;
@@ -11,6 +12,7 @@ state("XR_3DA","1.0000")
 {
 	bool Loading: "xrNetServer.dll", 0xFAC4;
 	bool NoControl:	"xrGame.dll", 0x54C2F9;
+	bool isPaused: "XR_3DA.exe", 0x1047C0;
 	float sync: "XR_3DA.exe", 0x104928;
 	string20 CurMap: "xrCore.dll", 0xBA040, 0x4, 0x0, 0x40, 0x8, 0x20, 0x14;
 	string21 End: "XR_3DA.exe", 0x10A878, 0xBC;
@@ -83,7 +85,7 @@ onReset
 }
 isLoading
 {
-	return !current.Loading || (current.sync > 0.09 && current.sync < 0.11) || current.NoControl;
+	return !current.Loading || (current.sync > 0.09 && current.sync < 0.11) || current.NoControl || !current.isPaused && current.sync == 0;
 }
 exit
 {
