@@ -4,6 +4,7 @@ state("xrEngine", "1.6.02")
 	bool Load2: "xrEngine.exe", 0x913F5;
 	string20 CurMap: "xrCore.dll", 0xBE910, 0x18, 0x28, 0x0;
 	float sync: "xrEngine.exe", 0x92EF4;
+	string5 end: "xrGame.dll", 0x64E058, 0x48, 0x24, 0x4, 0x8, 0x8, 0x8, 0xC, 0x10, 0x0; //works only in renderer_R1
 }
 
 startup
@@ -51,7 +52,7 @@ start
 
 split
 {
-    if (current.CurMap != old.CurMap && !current.Loading && current.sync != 0 && settings["autosplitter"])
+    if (current.CurMap != old.CurMap && !current.Loading && current.sync != 0 && settings["autosplitter"] || current.end == "outro")
 	{
 		vars.doneMaps.Add(current.CurMap);
 		return true;
