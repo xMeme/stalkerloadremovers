@@ -5,8 +5,7 @@ state("XR_3DA","1.0006")
 	bool isPaused: "XR_3DA.exe", 0x10BCD0;
 	float sync: "XR_3DA.exe", 0x10BE80;
 	string20 CurMap: "xrCore.dll", 0xBF368, 0x4, 0x0, 0x40, 0x8, 0x28, 0x4;
-	string21 End: "XR_3DA.exe", 0x171DD4, 0x180;
-	string15 TrueEnd: "XR_3DA.exe", 0x7D0F8, 0x1CE;
+	string5 End: "XR_3DA.exe", 0x10BDB0, 0x3C, 0x10, 0x0, 0x0, 0x44, 0xC, 0x12;
 }
 state("XR_3DA","1.0000")
 {
@@ -15,8 +14,7 @@ state("XR_3DA","1.0000")
 	bool isPaused: "XR_3DA.exe", 0x1047C0;
 	float sync: "XR_3DA.exe", 0x104928;
 	string20 CurMap: "xrCore.dll", 0xBA040, 0x4, 0x0, 0x40, 0x8, 0x20, 0x14;
-	string21 End: "XR_3DA.exe", 0x10A878, 0xBC;
-	string15 TrueEnd: "XR_3DA.exe", 0x4163C, 0xD30;
+	string5 End: "XR_3DA.exe", 0x1048BC, 0x54, 0x14, 0x0, 0x0, 0x44, 0xC, 0x12;
 }
 startup
 {
@@ -48,7 +46,6 @@ startup
 
 init
 {
-	vars.doneMaps = new List<string>();
 	timer.IsGameTimePaused = false;
 
 	//print(modules.First().ModuleMemorySize.ToString());
@@ -63,29 +60,25 @@ init
 	}
 	if(settings["fix"])
 	{
-		refreshRate = 40;
+		refreshRate = 30;
 	}
 }
 
 start
 {
-    return current.Loading && !old.Loading;
+    while (current.Loading && !old.Loading)
+    {
+        timer.IsGameTimePaused = true;
+        return true;
+    }
 }
 split
 {
-    if (current.CurMap != old.CurMap && !current.Loading && current.sync != 0 && settings["autosplitter"] || current.End == "final_immortal.ogm" && current.sync == 0 || current.End == "final_gold.ogm" && current.sync == 0 || current.End == "final_apocal.ogm" && current.sync == 0 || current.End == "final_blind.ogm" && current.sync == 0 || current.End == "final_to_monolith.ogm" && current.sync == 0 || current.TrueEnd == "final_peace.ogm" && current.sync == 0)
-	{
-		vars.doneMaps.Add(current.CurMap);
-		return true;
-	}
-}
-onReset
-{
-	vars.doneMaps.Clear();
+    return current.CurMap != old.CurMap && current.CurMap != "" && old.CurMap != "" && settings["autosplitter"] || current.End == "final";
 }
 isLoading
 {
-	return !current.Loading || (current.sync > 0.09 && current.sync < 0.11) || current.NoControl || !current.isPaused && current.sync == 0;
+	return !current.Loading || (current.sync > 0.057 && current.sync < 0.11) || current.NoControl || !current.isPaused && current.sync == 0;
 }
 exit
 {
