@@ -5,31 +5,30 @@
 
 |  Type     | Name             | Description                                                                                                               |
 |  ------   | ---------------  | ----------------------------------------------------------------------------------------------------------------          |
-|  bool     | Loading          | `true` while loading a level or save                                                                                      |
-|  string   | CurMap           | Displays currently loaded level name                                                                                      |
+|  bool     | Loading          | `true` while player is connected to a local server                                                                        |
+|  string   | CurMap           | Displays currently loaded shortened level name                                                                            |
 |  bool     | isPaused         | `true` while game is paused                                                                                               |
-|  bool     | NoControl        | `true` while in-game cinematic cutscene is playing. Or when player is being at level transition prompt                    |
+|  bool     | Prompt           | `true` When player is being at level transition prompt                                                                    |
 |  float    | sync             | Tickrate of the game                                                                                                      |
-|  string   | End              | Displays name of video file of any Wishgranter endings                                                                    |
-|  string   | TrueEnd          | Same purpose as End pointer, but for a name of video file of True Ending, when Strelok destroys C-Consciousness           |
+|  string   | End              | Displays name of video cutscenes                                                                                          |
 
 ### Clear Sky v1.5.10
 |  Type     | Name             | Description                                                                                                               |
 |  ------   | ---------------  | ----------------------------------------------------------------------------------------------------------------          |
 |  string   | Start            | Displays name of video file of Intro cutscene                                                                             |
-|  bool     | Loading          | `true` while loading a level or save                                                                                      |
-|  string   | CurMap           | Displays currently loaded level name                                                                                      |
+|  bool     | Loading          | `true` while player is connected to a local server                                                                        |
+|  string   | CurMap           | Displays currently loaded shortened level name                                                                            |
 |  bool     | NoControl        | `true` while in-game cinematic cutscene is playing.                                                                       |
-|  float    | Sync             | Tickrate of the game                                                                                                      |
+|  float    | sync             | Tickrate of the game                                                                                                      |
 |  string   | End              | Displays name of video file of Ending cutscene                                                                            |
 
 ### Call of Pripyat v1.6.02
 |  Type     | Name             | Description                                                                                                               |
 |  ------   | ---------------  | ----------------------------------------------------------------------------------------------------------------          |
-|  bool     | Loading          | `true` while loading a level or save                                                                                      |
-|  bool     | Load2            | `true` while level is loaded & player didn't press'd any key yet                                                          |
-|  string   | CurMap           | Displays currently loaded level name                                                                                      |
-|  float    | Sync             | Tickrate of the game                                                                                                      |
+|  bool     | Load             | `true` while player is connected to a local server                                                                        |
+|  bool     | Load2            | `true` while game is loaded & player didn't leave loading screen yet                                                      |
+|  string   | CurMap           | Displays currently loaded shortened level name                                                                            |
+|  float    | sync             | Tickrate of the game                                                                                                      |
 |  string   | End              | Displays shortened name of audio file of Ending cutscene                                                                  |
 
 
@@ -48,7 +47,7 @@ These are the internal Wish Granter ending names that you get when you read the 
 
 ## Level names
 
-These are the internal location names that you get when you read the memory address mentioned above.
+These are the internal shortened location names that you get when you read the memory address mentioned above.
 
 ### Shadow of Chernobyl
 
