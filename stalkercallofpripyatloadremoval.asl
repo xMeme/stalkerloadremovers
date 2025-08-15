@@ -91,8 +91,8 @@ init {
     }
     if (version == "1.6.02")
     {
-        var xrNetServer = modules.FirstOrDefault(m => m.ModuleName == "xrNetServer.dll").BaseAddress;
-        var xrCore = modules.FirstOrDefault(m => m.ModuleName == "xrCore.dll").BaseAddress;
+        var xrNetServer = modules.First(m => m.ModuleName.Equals("xrNetServer.dll", StringComparison.OrdinalIgnoreCase)).BaseAddress;
+        var xrCore = modules.First(m => m.ModuleName.Equals("xrCore.dll", StringComparison.OrdinalIgnoreCase)).BaseAddress;
 
         vars.Load = new MemoryWatcher<bool>(xrNetServer + 0x12E04);
         vars.Load2 = new MemoryWatcher<bool>(modules.First().BaseAddress + 0x913F5);

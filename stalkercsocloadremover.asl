@@ -98,9 +98,9 @@ init
             version = "1.0006";
         }
 
-        var xrNetServer = modules.FirstOrDefault(m => m.ModuleName == "xrNetServer.dll").BaseAddress;
-        var xrGame = modules.FirstOrDefault(m => m.ModuleName == "xrGame.dll").BaseAddress;
-        var xrCore = modules.FirstOrDefault(m => m.ModuleName == "xrCore.dll").BaseAddress;
+        var xrNetServer = modules.First(m => m.ModuleName.Equals("xrNetServer.dll", StringComparison.OrdinalIgnoreCase)).BaseAddress;
+        var xrGame = modules.First(m => m.ModuleName.Equals("xrGame.dll", StringComparison.OrdinalIgnoreCase)).BaseAddress;
+        var xrCore = modules.First(m => m.ModuleName.Equals("xrCore.dll", StringComparison.OrdinalIgnoreCase)).BaseAddress;
 
         if (version == "1.0000")
         {
