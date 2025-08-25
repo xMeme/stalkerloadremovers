@@ -46,32 +46,28 @@ init
     {
         var scanner = new SignatureScanner(game, modules.First().BaseAddress, modules.First().ModuleMemorySize);
 
-        var LoadSig = new SigScanTarget("44 8B ?? ?? ?? ?? ?? 48 8D ?? ?? ?? ?? ?? 45 8B ?? 41 83");
+        var LoadSig = new SigScanTarget(3, "44 8B ?? ?? ?? ?? ?? 48 8D ?? ?? ?? ?? ?? 45 8B ?? 41 83");
         var LoadLocation = scanner.Scan(LoadSig);
-        var LoadAddr = LoadLocation + 3;
-        var LoadRIP = memory.ReadValue<int>(LoadAddr);
-        var LoadRIPAddr = LoadLocation + 7 + LoadRIP;
+        var LoadRIP = memory.ReadValue<int>(LoadLocation);
+        var LoadRIPAddr = LoadLocation + 4 + LoadRIP;
         vars.Loading = new MemoryWatcher<bool>(LoadRIPAddr);
 
-        var isPausedSig = new SigScanTarget("0F B6 ?? ?? ?? ?? ?? 90 C3 ?? ?? ?? ?? ?? ?? ?? 48 89");
+        var isPausedSig = new SigScanTarget(3, "0F B6 ?? ?? ?? ?? ?? 90 C3 ?? ?? ?? ?? ?? ?? ?? 48 89");
         var isPausedLocation = scanner.Scan(isPausedSig);
-        var isPausedAddr = isPausedLocation + 3;
-        var isPausedRIP = memory.ReadValue<int>(isPausedAddr);
-        var isPausedRIPAddr = isPausedLocation + 7 + isPausedRIP;
+        var isPausedRIP = memory.ReadValue<int>(isPausedLocation);
+        var isPausedRIPAddr = isPausedLocation + 4 + isPausedRIP;
         vars.isPaused = new MemoryWatcher<bool>(isPausedRIPAddr);
 
-        var SyncSig = new SigScanTarget("C5 ?? ?? ?? ?? ?? ?? ?? C5 ?? ?? ?? ?? ?? ?? ?? C5 ?? ?? ?? C5 ?? ?? ?? 72 ?? C5 ?? ?? ?? C5");
+        var SyncSig = new SigScanTarget(4, "C5 ?? ?? ?? ?? ?? ?? ?? C5 ?? ?? ?? ?? ?? ?? ?? C5 ?? ?? ?? C5 ?? ?? ?? 72 ?? C5 ?? ?? ?? C5");
         var SyncLocation = scanner.Scan(SyncSig);
-        var SyncAddr = SyncLocation + 4;
-        var SyncRIP = memory.ReadValue<int>(SyncAddr);
-        var SyncRIPAddr = SyncLocation + 8 + SyncRIP;
+        var SyncRIP = memory.ReadValue<int>(SyncLocation);
+        var SyncRIPAddr = SyncLocation + 4 + SyncRIP;
         vars.sync = new MemoryWatcher<float>(SyncRIPAddr);
 
-        var CurMapSig = new SigScanTarget("4C ?? ?? ?? ?? ?? ?? 39 ?? ?? ?? ?? ?? 0F 84 ?? ?? ?? ?? 48 89 ?? ?? ?? ?? ?? ?? 33");
+        var CurMapSig = new SigScanTarget(3, "4C ?? ?? ?? ?? ?? ?? 39 ?? ?? ?? ?? ?? 0F 84 ?? ?? ?? ?? 48 89 ?? ?? ?? ?? ?? ?? 33");
         var CurMapLocation = scanner.Scan(CurMapSig);
-        var CurMapAddr = CurMapLocation + 3;
-        var CurMapRIP = memory.ReadValue<int>(CurMapAddr);
-        var CurMapRIPAddr = CurMapLocation + 7 + CurMapRIP + 0xC;
+        var CurMapRIP = memory.ReadValue<int>(CurMapLocation);
+        var CurMapRIPAddr = CurMapLocation + 4 + CurMapRIP + 0xC;
         vars.CurMap = new StringWatcher(CurMapRIPAddr, 20);
 
         //Placeholders, until GSC stops updating Enhanced Edition.
