@@ -152,7 +152,7 @@ start
 }
 split
 {
-    return vars.CurMap.Changed && vars.CurMap.Current != "" && vars.CurMap.Old != "" && settings["autosplitter"] || vars.End.Current == "final";
+    return vars.CurMap.Changed && vars.CurMap.Current != "" && vars.CurMap.Old != "" && settings["autosplitter"] || (var.End.old != "final" && var.End.current == "final");
 }
 isLoading
 {
