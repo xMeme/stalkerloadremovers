@@ -70,6 +70,7 @@ init
 
         //Placeholder, until GSC stops updating Enhanced Edition.
         vars.End = new StringWatcher(IntPtr.Zero, 5);
+        vars.globalTimer = new MemoryWatcher<float>(IntPtr.Zero);
 
         vars.watchers = new MemoryWatcherList()
         {
@@ -100,6 +101,7 @@ init
         if (version == "1.0000")
         {
             vars.Loading = new MemoryWatcher<bool>(xrNetServer + 0xFAC4);
+            vars.globalTimer = new MemoryWatcher<float>(modules.First().BaseAddress + 0x10492C);
             vars.Prompt = new MemoryWatcher<bool>(xrGame + 0x54C2F9);
             vars.isPaused = new MemoryWatcher<bool>(modules.First().BaseAddress + 0x1047C0);
             vars.sync = new MemoryWatcher<float>(modules.First().BaseAddress + 0x104928);
@@ -109,6 +111,7 @@ init
         if (version == "1.0006")
         {
             vars.Loading = new MemoryWatcher<bool>(xrNetServer + 0x13E84);
+            vars.globalTimer = new MemoryWatcher<float>(modules.First().BaseAddress + 0x10BE84);
             vars.Prompt = new MemoryWatcher<bool>(xrGame + 0x560668);
             vars.isPaused = new MemoryWatcher<bool>(modules.First().BaseAddress + 0x10BCD0);
             vars.sync = new MemoryWatcher<float>(modules.First().BaseAddress + 0x10BE80);
@@ -119,6 +122,7 @@ init
         vars.watchers = new MemoryWatcherList()
         {
             vars.Loading,
+            vars.globalTimer,
             vars.Prompt,
             vars.isPaused,
             vars.sync,
@@ -156,7 +160,14 @@ split
 }
 isLoading
 {
-    return !vars.Loading.Current || (vars.sync.Current > 0.057 && vars.sync.Current < 0.11) || vars.Prompt.Current || !vars.isPaused.Current && vars.sync.Current == 0;
+    if (version == "1.0000" || game.ProcessName == "xrEngine")
+    {
+        return !vars.Loading.Current || (vars.sync.Current > 0.057 && vars.sync.Current < 0.11) || vars.Prompt.Current || !vars.isPaused.Current && vars.sync.Current == 0 && !vars.globalTimer.Changed;
+    }
+    if (version == "1.0006")
+    {
+        return !vars.Loading.Current || (vars.sync.Current > 0.09 && vars.sync.Current < 0.11) || vars.Prompt.Current || !vars.isPaused.Current && vars.sync.Current == 0 && !vars.globalTimer.Changed;
+    }
 }
 exit
 {
