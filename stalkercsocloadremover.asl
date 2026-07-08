@@ -7,9 +7,9 @@ startup
     settings.Add("autosplitter", true, "Autosplit per level - Автосплит для каждого уровня");
     settings.SetToolTip
     (
-        "autosplitter",
-        "Enable autosplitter on every level transition \n"+
-        "Автоматическое переключение при переходе на локацию"
+    "autosplitter",
+    "Enable autosplitter on every level transition \n"+
+    "Автоматическое переключение при переходе на локацию"
     );
     settings.Add("fix", false, "Low PC Fix");
     if (timer.CurrentTimingMethod == TimingMethod.RealTime)
@@ -94,7 +94,7 @@ init
         var CurMapRIPAddr = CurMapLocation + 4 + CurMapRIP + 0xC;
         vars.CurMap = new StringWatcher(CurMapRIPAddr, 20);
 
-        // Placeholder, until GSC stops updating Enhanced Edition.
+        //Placeholder, until GSC stops updating Enhanced Edition.
         vars.End = new StringWatcher(IntPtr.Zero, 5);
         vars.globalTimer = new MemoryWatcher<float>(IntPtr.Zero);
 
@@ -106,10 +106,8 @@ init
             vars.sync,
             vars.CurMap
         };
-
         version = "Enhanced";
     }
-
     if (game.ProcessName == "XR_3DA")
     {
         var mainModule = modules.FirstOrDefault();
@@ -118,6 +116,7 @@ init
             throw new Exception("Main module of XR_3DA.exe is not loaded yet.");
         }
 
+        //print(mainModule.ModuleMemorySize.ToString());
         if (mainModule.ModuleMemorySize == 1662976 || mainModule.ModuleMemorySize == 1613824)
         {
             version = "1.0000";
@@ -205,17 +204,15 @@ start
         timer.IsGameTimePaused = true;
         return true;
     }
-    if (!vars.isPaused.Current && vars.isPaused.Changed && vars.Loading.Current && version == "Enhanced")
+    if (!vars.isPaused.Current && vars.isPaused.Changed && vars.Loading.Current && version == "Enhanced") //Annoying, until GSC stops updating Enhanced Edition.
     {
         return true;
     }
 }
-
 split
 {
     return vars.CurMap.Changed && vars.CurMap.Current != "" && vars.CurMap.Old != "" && settings["autosplitter"] || (vars.End.Old != "final" && vars.End.Current == "final");
 }
-
 isLoading
 {
     if (version == "1.0000" || version == "Enhanced")
@@ -227,7 +224,6 @@ isLoading
         return !vars.Loading.Current || (vars.sync.Current > 0.09 && vars.sync.Current < 0.11) || vars.Prompt.Current || !vars.isPaused.Current && vars.sync.Current == 0 && !vars.globalTimer.Changed;
     }
 }
-
 exit
 {
     timer.IsGameTimePaused = true;
