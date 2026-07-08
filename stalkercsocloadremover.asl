@@ -36,34 +36,60 @@ init
 
     if (game.ProcessName == "xrEngine")
     {
-        var scanner = new SignatureScanner(game, modules.First().BaseAddress, modules.First().ModuleMemorySize);
+        var mainModule = modules.FirstOrDefault();
+        if (mainModule == null)
+        {
+            throw new Exception("Main module of xrEngine.exe is not loaded yet.");
+        }
+
+        var scanner = new SignatureScanner(game, mainModule.BaseAddress, mainModule.ModuleMemorySize);
 
         var LoadSig = new SigScanTarget(3, "44 8B ?? ?? ?? ?? ?? 48 8D ?? ?? ?? ?? ?? 45 8B ?? 41 83");
         var LoadLocation = scanner.Scan(LoadSig);
+        if (LoadLocation == IntPtr.Zero)
+        {
+            throw new Exception("Loading signature not found yet.");
+        }
         var LoadRIP = memory.ReadValue<int>(LoadLocation);
         var LoadRIPAddr = LoadLocation + 4 + LoadRIP;
         vars.Loading = new MemoryWatcher<bool>(LoadRIPAddr);
 
         var PromptSig = new SigScanTarget(2, "C6 ?? ?? ?? ?? ?? ?? 48 8D ?? ?? ?? ?? ?? 44 8B ?? 44 8B");
         var PromptLocation = scanner.Scan(PromptSig);
+        if (PromptLocation == IntPtr.Zero)
+        {
+            throw new Exception("Prompt signature not found yet.");
+        }
         var PromptRIP = memory.ReadValue<int>(PromptLocation);
         var PromptRIPAddr = PromptLocation + 5 + PromptRIP;
         vars.Prompt = new MemoryWatcher<bool>(PromptRIPAddr);
 
         var isPausedSig = new SigScanTarget(3, "0F B6 ?? ?? ?? ?? ?? 90 C3 ?? ?? ?? ?? ?? ?? ?? 48 89");
         var isPausedLocation = scanner.Scan(isPausedSig);
+        if (isPausedLocation == IntPtr.Zero)
+        {
+            throw new Exception("isPaused signature not found yet.");
+        }
         var isPausedRIP = memory.ReadValue<int>(isPausedLocation);
         var isPausedRIPAddr = isPausedLocation + 4 + isPausedRIP;
         vars.isPaused = new MemoryWatcher<bool>(isPausedRIPAddr);
 
         var SyncSig = new SigScanTarget(4, "C5 ?? ?? ?? ?? ?? ?? ?? C5 ?? ?? ?? ?? ?? ?? ?? C5 ?? ?? ?? C5 ?? ?? ?? 72 ?? C5 ?? ?? ?? C5");
         var SyncLocation = scanner.Scan(SyncSig);
+        if (SyncLocation == IntPtr.Zero)
+        {
+            throw new Exception("Sync signature not found yet.");
+        }
         var SyncRIP = memory.ReadValue<int>(SyncLocation);
         var SyncRIPAddr = SyncLocation + 4 + SyncRIP;
         vars.sync = new MemoryWatcher<float>(SyncRIPAddr);
 
         var CurMapSig = new SigScanTarget(3, "4C ?? ?? ?? ?? ?? ?? 39 ?? ?? ?? ?? ?? 0F 84 ?? ?? ?? ?? 48 89 ?? ?? ?? ?? ?? ?? 33");
         var CurMapLocation = scanner.Scan(CurMapSig);
+        if (CurMapLocation == IntPtr.Zero)
+        {
+            throw new Exception("CurMap signature not found yet.");
+        }
         var CurMapRIP = memory.ReadValue<int>(CurMapLocation);
         var CurMapRIPAddr = CurMapLocation + 4 + CurMapRIP + 0xC;
         vars.CurMap = new StringWatcher(CurMapRIPAddr, 20);
@@ -79,13 +105,19 @@ init
             vars.isPaused,
             vars.sync,
             vars.CurMap
-            
         };
+        version = "Enhanced";
     }
     if (game.ProcessName == "XR_3DA")
     {
-        //print(modules.First().ModuleMemorySize.ToString());
-        if (modules.First().ModuleMemorySize == 1662976 || modules.First().ModuleMemorySize == 1613824)
+        var mainModule = modules.FirstOrDefault();
+        if (mainModule == null)
+        {
+            throw new Exception("Main module of XR_3DA.exe is not loaded yet.");
+        }
+
+        //print(mainModule.ModuleMemorySize.ToString());
+        if (mainModule.ModuleMemorySize == 1662976 || mainModule.ModuleMemorySize == 1613824)
         {
             version = "1.0000";
         }
@@ -94,29 +126,40 @@ init
             version = "1.0006";
         }
 
-        var xrNetServer = modules.First(m => m.ModuleName.Equals("xrNetServer.dll", StringComparison.OrdinalIgnoreCase)).BaseAddress;
-        var xrGame = modules.First(m => m.ModuleName.Equals("xrGame.dll", StringComparison.OrdinalIgnoreCase)).BaseAddress;
-        var xrCore = modules.First(m => m.ModuleName.Equals("xrCore.dll", StringComparison.OrdinalIgnoreCase)).BaseAddress;
+        var xrNetServerModule = modules.FirstOrDefault(m => m.ModuleName.Equals("xrNetServer.dll", StringComparison.OrdinalIgnoreCase));
+        var xrGameModule = modules.FirstOrDefault(m => m.ModuleName.Equals("xrGame.dll", StringComparison.OrdinalIgnoreCase));
+        var xrCoreModule = modules.FirstOrDefault(m => m.ModuleName.Equals("xrCore.dll", StringComparison.OrdinalIgnoreCase));
+
+        // Checks the dlls, if one of them is not loaded - IGT is paused
+        if (xrNetServerModule == null || xrGameModule == null || xrCoreModule == null)
+        {
+            timer.IsGameTimePaused = true;
+            throw new Exception("Required game modules (xrNetServer, xrGame, xrCore) are not loaded yet.");
+        }
+
+        var xrNetServer = xrNetServerModule.BaseAddress;
+        var xrGame = xrGameModule.BaseAddress;
+        var xrCore = xrCoreModule.BaseAddress;
 
         if (version == "1.0000")
         {
             vars.Loading = new MemoryWatcher<bool>(xrNetServer + 0xFAC4);
-            vars.globalTimer = new MemoryWatcher<float>(modules.First().BaseAddress + 0x10492C);
+            vars.globalTimer = new MemoryWatcher<float>(mainModule.BaseAddress + 0x10492C);
             vars.Prompt = new MemoryWatcher<bool>(xrGame + 0x54C2F9);
-            vars.isPaused = new MemoryWatcher<bool>(modules.First().BaseAddress + 0x1047C0);
-            vars.sync = new MemoryWatcher<float>(modules.First().BaseAddress + 0x104928);
+            vars.isPaused = new MemoryWatcher<bool>(mainModule.BaseAddress + 0x1047C0);
+            vars.sync = new MemoryWatcher<float>(mainModule.BaseAddress + 0x104928);
             vars.CurMap = new StringWatcher(new DeepPointer(xrCore + 0xBA040, 0x4, 0x0, 0x40, 0x8, 0x20, 0x14), 20);
-            vars.End = new StringWatcher(new DeepPointer(modules.First().BaseAddress + 0x1048BC, 0x54, 0x14, 0x0, 0x0, 0x44, 0xC, 0x12), 5);
+            vars.End = new StringWatcher(new DeepPointer(mainModule.BaseAddress + 0x1048BC, 0x54, 0x14, 0x0, 0x0, 0x44, 0xC, 0x12), 5);
         }
         if (version == "1.0006")
         {
             vars.Loading = new MemoryWatcher<bool>(xrNetServer + 0x13E84);
-            vars.globalTimer = new MemoryWatcher<float>(modules.First().BaseAddress + 0x10BE84);
+            vars.globalTimer = new MemoryWatcher<float>(mainModule.BaseAddress + 0x10BE84);
             vars.Prompt = new MemoryWatcher<bool>(xrGame + 0x560668);
-            vars.isPaused = new MemoryWatcher<bool>(modules.First().BaseAddress + 0x10BCD0);
-            vars.sync = new MemoryWatcher<float>(modules.First().BaseAddress + 0x10BE80);
+            vars.isPaused = new MemoryWatcher<bool>(mainModule.BaseAddress + 0x10BCD0);
+            vars.sync = new MemoryWatcher<float>(mainModule.BaseAddress + 0x10BE80);
             vars.CurMap = new StringWatcher(new DeepPointer(xrCore + 0xBF368, 0x4, 0x0, 0x40, 0x8, 0x28, 0x4), 20);
-            vars.End = new StringWatcher(new DeepPointer(modules.First().BaseAddress + 0x10BDB0, 0x3C, 0x10, 0x0, 0x0, 0x44, 0xC, 0x12), 5);
+            vars.End = new StringWatcher(new DeepPointer(mainModule.BaseAddress + 0x10BDB0, 0x3C, 0x10, 0x0, 0x0, 0x44, 0xC, 0x12), 5);
         }
 
         vars.watchers = new MemoryWatcherList()
@@ -139,17 +182,29 @@ init
 
 update
 {
-    vars.watchers.UpdateAll(game);
+    if (vars.watchers == null)
+    {
+        return false;
+    }
+
+    try
+    {
+        vars.watchers.UpdateAll(game);
+    }
+    catch (Exception ex)
+    {
+        return false;
+    }
 }
 
 start
 {
-    if (vars.Loading.Current && vars.Loading.Changed && game.ProcessName == "XR_3DA")
+    if (vars.Loading.Current && vars.Loading.Changed && (version == "1.0000" || version == "1.0006"))
     {
         timer.IsGameTimePaused = true;
         return true;
     }
-    if (!vars.isPaused.Current && vars.isPaused.Changed && vars.Loading.Current && game.ProcessName == "xrEngine") //Annoying, until GSC stops updating Enhanced Edition.
+    if (!vars.isPaused.Current && vars.isPaused.Changed && vars.Loading.Current && version == "Enhanced") //Annoying, until GSC stops updating Enhanced Edition.
     {
         return true;
     }
@@ -160,7 +215,7 @@ split
 }
 isLoading
 {
-    if (version == "1.0000" || game.ProcessName == "xrEngine")
+    if (version == "1.0000" || version == "Enhanced")
     {
         return !vars.Loading.Current || (vars.sync.Current > 0.057 && vars.sync.Current < 0.11) || vars.Prompt.Current || !vars.isPaused.Current && vars.sync.Current == 0 && !vars.globalTimer.Changed;
     }
